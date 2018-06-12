@@ -1,0 +1,12 @@
+3-tiers:
+web <--> logic <--> data
+
+spring boot:
+automation setup for spring framework
+
+spring framework:
+framework of ReST web services
+MVC
+Test
+JPA
+Security
