@@ -1,12 +1,19 @@
 3-tiers:
-web <--> logic <--> data
+	web <--> logic <--> data
+
+Maven:
+	script to set up dependencies and standards
 
 spring boot:
-automation setup for spring framework
+	automation setup for spring framework
+	Spring Initializr -- Maven/Gradle to build
+	support SQL/NoSQL
 
 spring framework:
-framework of ReST web services
-MVC
-Test
-JPA
-Security
+	framework of ReST web services
+
+	application -- rest controller: map service to http methods -- components: support service
+
+	MVC: annotations
+	Test
+	Security
