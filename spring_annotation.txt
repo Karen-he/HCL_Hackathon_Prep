@@ -1,0 +1,11 @@
+@Component -- @Autowired
+
+@GetMapping  -- @PathVariable
+@PostMapping -- @RequestBody
+@DeleteMapping -- @PathVariable
+
+@RestControllor: map method to http method
+@ControllerAdvice -- share across classes
+
+@ResponseStatus: NotFound, Internal Server Error
+@ExceptionHandler(which Exception)
