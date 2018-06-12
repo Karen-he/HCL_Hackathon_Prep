@@ -6,7 +6,7 @@ Maven:
 
 spring boot:
 	automation setup for spring framework
-	Spring Initializr -- Maven/Gradle to build
+	Spring Initializr -- Maven/Gradle to build: project metadata & dependencies
 	support SQL/NoSQL
 
 spring framework:
@@ -17,3 +17,5 @@ spring framework:
 	MVC: annotations
 	Test
 	Security
+
+Java EE for Web Service:
