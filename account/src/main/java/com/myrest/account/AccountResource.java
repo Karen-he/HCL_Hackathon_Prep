@@ -11,7 +11,7 @@ import java.util.Optional;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
 @RestController
-public class AccountMySQLResource {
+public class AccountResource {
 //    @Autowired
 //    private AccountDaoService service;
 
