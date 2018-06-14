@@ -4,40 +4,51 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import java.net.URI;
-import java.util.List;
+import java.util.Optional;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
 @RestController
-public class AccountResource {
-    @Autowired
-    private AccountDaoService service;
+public class AccountMySQLResource {
+//    @Autowired
+//    private AccountDaoService service;
 
-    @GetMapping("/accounts")
-    public List<Account> retrieveAllUsers(){
-        return service.findAll();
+    @Autowired
+    private AccountRepository accountRepository;
+
+    @GetMapping("/mysql/accounts")
+    public Iterable<Account> retrieveAllUsers(){
+        return accountRepository.findAll();
     }
 
-    @GetMapping("/accounts/{id}")
-    public Account retrieveAccount(@PathVariable int id){
-        Account account = service.findOne(id);
-        if(account==null){
+    @GetMapping("/mysql/accounts/{id}")
+    public Resource<Account> retrieveAccount(@PathVariable int id){
+        Optional<Account> account = accountRepository.findById((long) id);
+        if(!account.isPresent()){
             throw new AccountNotFound("id-"+ id);
         }
-        return service.findOne(id);
+
+        Resource<Account> resource = new Resource<Account>(account.get());
+        ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAllUsers());
+        resource.add(linkTo.withRel("all-accounts"));
+        return resource;
     }
 
-    @PostMapping("/accounts")
+    @PostMapping("/mysql/accounts")
     public ResponseEntity<Object> createUser(@RequestBody Account account){
-        Account savedAccount = service.save(account);
+        Account savedAccount = accountRepository.save(account);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedAccount.getId()).toUri();
         return ResponseEntity.created(location).build();   //201 created, header: location in url
     }
 
-    @DeleteMapping(path = "/accounts/{id}")
+    @DeleteMapping(path = "/mysql/accounts/{id}")
     public void deleteUser(@PathVariable int id){
-        Account user = service.deleteById(id);
-        if(user==null){
-            throw new AccountNotFound("id-"+ id);
-        }
+        accountRepository.deleteById((long) id);
+//        Account user = service.deleteById(id);
+//        if(user==null){
+//            throw new AccountNotFound("id-"+ id);
+//        }
     }
 }
